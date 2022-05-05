@@ -33,7 +33,7 @@ const userSchema = mongoose.Schema(
             required: true,
             index: true,
             unique: true,
-            default: () => crypto.randomBytes(20).toString('hex'),
+            default: () => Math.floor(100000 + Math.random() * 900000),
         },
         oauthprofiles: [
             {
