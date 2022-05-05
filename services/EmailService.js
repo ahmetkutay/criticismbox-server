@@ -1,6 +1,5 @@
 const nodemailer = require("nodemailer");
 require('dotenv').config();
-const UserModel = require('../models/UserModel');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -13,7 +12,6 @@ const transporter = nodemailer.createTransport({
 class EmailService {
 
     static async sendEmail(user) {
-        console.log(user)
         const mailOptions = {
             from: 'akkaracair@gmail.com',
             to: user.email,

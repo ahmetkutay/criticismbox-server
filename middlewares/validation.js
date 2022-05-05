@@ -25,12 +25,10 @@ module.exports.validateUsername = body('username')
     .trim()
     .withMessage('The username has to be at least 6 characters long.');
 
-/*module.exports.validateMobileNumber = (value) => {
-    console.log(value.body.mobileNumber)
-    if (!validator.isMobilePhone(value.body.mobileNumber)) {
-        throw new Error('Phone is invalid');
+module.exports.validateMobileNumber = body('mobileNumber').custom(
+    (value) => {
+        return validator.isMobilePhone(value);
     }
-}*/
-
+).withMessage(`Phone is invalid`);
 
 module.exports.validationResult = validationResult;

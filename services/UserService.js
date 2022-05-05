@@ -14,11 +14,12 @@ class UserService {
         return UserModel.findOne({username}).exec();
     }
 
-    static async createUser(username, email, password) {
+    static async createUser(username, email, password, phoneNumber) {
         const user = new UserModel();
         user.email = email;
         user.password = password;
         user.username = username;
+        user.mobileNumber = phoneNumber;
         return await user.save();
 
     }

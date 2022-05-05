@@ -2,6 +2,7 @@ const {Router} = require('express');
 
 const UserService = require('../../services/UserService');
 const EmailService = require('../../services/EmailService');
+const SmsService = require('../../services/SmsService');
 
 const validation = require('../../middlewares/validation');
 
@@ -14,6 +15,7 @@ module.exports = () => {
         validation.validateEmail,
         validation.validatePassword,
         validation.validatePasswordMatch,
+        validation.validateMobileNumber,
         async (req, res, next) => {
             try {
                 const validationErrors = validation.validationResult(req);
@@ -46,10 +48,12 @@ module.exports = () => {
                 const user = await UserService.createUser(
                     req.body.username,
                     req.body.email,
-                    req.body.password
+                    req.body.password,
+                    req.body.mobileNumber
                 );
 
-                await EmailService.sendEmail(user);
+                //await EmailService.sendEmail(user);
+                await SmsService.sendSms(user);
 
                 return res.json({user: user});
             } catch (err) {

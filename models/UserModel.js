@@ -24,6 +24,11 @@ const userSchema = mongoose.Schema(
             minlength: 8,
             trim: true,
         },
+        mobileNumber: {
+            type: String,
+            required: true,
+            index: {unique: true},
+        },
         verified: {
             type: Boolean,
             default: false,
