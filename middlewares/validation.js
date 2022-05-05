@@ -1,4 +1,5 @@
 const {body, validationResult} = require('express-validator');
+const validator = require('validator');
 
 module.exports.validatePassword = body('password')
     .isLength({min: 8})
@@ -23,5 +24,13 @@ module.exports.validateUsername = body('username')
     .isLength({min: 6})
     .trim()
     .withMessage('The username has to be at least 6 characters long.');
+
+/*module.exports.validateMobileNumber = (value) => {
+    console.log(value.body.mobileNumber)
+    if (!validator.isMobilePhone(value.body.mobileNumber)) {
+        throw new Error('Phone is invalid');
+    }
+}*/
+
 
 module.exports.validationResult = validationResult;

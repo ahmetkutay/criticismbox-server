@@ -1,8 +1,7 @@
 const {Router} = require('express');
-const nodemailer = require('nodemailer');
-require('dotenv').config();
 
 const UserService = require('../../services/UserService');
+const EmailService = require('../../services/EmailService');
 
 const validation = require('../../middlewares/validation');
 
@@ -50,34 +49,7 @@ module.exports = () => {
                     req.body.password
                 );
 
-                const transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                        user: process.env.EMAIL,
-                        pass: process.env.EMAIL_PASSWORD,
-                    }
-                });
-
-                var mailOptions = {
-                    from: 'akkaracair@gmail.com',
-                    to: user.email,
-                    subject: 'CriticismBox Account Verification',
-                    text: `Hi ${user.username},
-                            
-We just need to verify your email address before you can access Criticism Box.
-                            
-Verify your email address http://localhost:3000/auth/verify/${user._id}/${user.verificationToken}
-                            
-Thanks! – The CriticismBox team, `
-                };
-
-                transporter.sendMail(mailOptions, function (error, info) {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log('Email sent: ' + info.response);
-                    }
-                });
+                await EmailService.sendEmail(user);
 
                 return res.json({user: user});
             } catch (err) {
