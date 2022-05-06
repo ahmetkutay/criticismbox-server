@@ -26,7 +26,7 @@ const userSchema = mongoose.Schema(
         },
         mobileNumber: {
             type: String,
-            required: true,
+            required: false,
             index: {unique: true},
         },
         verified: {

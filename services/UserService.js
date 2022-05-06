@@ -24,7 +24,7 @@ class UserService {
 
     }
 
-    static async createSocialUser(username, email, oauthProfile) {
+    static async createGoogleUser(username, email, oauthProfile) {
         const user = new UserModel();
         user.email = email;
         user.oauthprofiles = [oauthProfile];

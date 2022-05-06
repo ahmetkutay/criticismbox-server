@@ -52,8 +52,11 @@ module.exports = () => {
                     req.body.mobileNumber
                 );
 
-                //await EmailService.sendEmail(user);
-                await SmsService.sendSms(user);
+                if (req.body.email) {
+                    await EmailService.sendEmail(user);
+                } else {
+                    await SmsService.sendSms(user);
+                }
 
                 return res.json({user: user});
             } catch (err) {
