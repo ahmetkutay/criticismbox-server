@@ -1,9 +1,6 @@
 const {Router} = require('express');
 
 const UserService = require('../../services/UserService');
-const EmailService = require('../../services/EmailService');
-const SmsService = require('../../services/SmsService');
-const validation = require('../../middlewares/validation');
 const passport = require("passport");
 
 const router = Router();
@@ -38,7 +35,7 @@ module.exports = () => {
 
                 const user = await UserService.createGoogleUser(req.user.displayName, req.user._json.email, tempOAuthProfile);
 
-                return res.json({googleUsers: user});
+                return res.send({googleUsers: user});
             } catch (err) {
                 return next(err);
             }
