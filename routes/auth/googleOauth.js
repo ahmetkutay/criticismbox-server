@@ -14,8 +14,8 @@ module.exports = () => {
         async (req, res, next) => {
             try {
                 const errors = [];
-                const existingEmail = await UserService.findByEmail(req.user._json.email);
-                const existingUsername = await UserService.findByUsername(req.user.displayName);
+                const existingEmail = await UserService.findByEmail(req.user.email || req.user._json.email);
+                const existingUsername = await UserService.findByUsername(req.user.username || req.user.displayName);
 
                 if (existingEmail || existingUsername) {
                     errors.push('email');

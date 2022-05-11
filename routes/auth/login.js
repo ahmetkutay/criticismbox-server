@@ -8,7 +8,7 @@ module.exports = () => {
     router.post(
         '/login',
         passport.authenticate('local', {
-            message:'Failed to login'
+            message: 'Failed to login'
         }),
         async (req, res, next) => {
             try {
@@ -18,8 +18,15 @@ module.exports = () => {
                 } else {
                     req.session.rememberme = null;
                 }
-                console.log(req.session);
-                res.send('Login success');
+                const dbUser = await UserService.findByUsername(req.user.username);
+                res.json({
+                    user: {
+                        username: dbUser.username,
+                        _id: dbUser._id,
+                        email: dbUser.email,
+                        mobileNumber: dbUser.mobileNumber
+                    }, session: req.session.rememberme
+                });
             } catch (err) {
                 return next(err);
             }
